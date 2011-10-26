@@ -35,6 +35,7 @@ public class MD5 {
 			digest = md.digest();
 			dstr = new BigInteger(1, digest).toString(16);
 
+			/* this is important, toString leaves out initial 0 */
 			if (dstr.length() % 2 > 0)
 				dstr = "0" + dstr;		
 		}
