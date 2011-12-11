@@ -20,6 +20,7 @@ import cn.com.axtg.scsemod.model.ScseConsignmentExample;
 import cn.com.axtg.scsemod.model.ScseConsignmentStatus;
 import cn.com.axtg.scsemod.model.ScseConsignmentStatusExample;
 import cn.com.axtg.scsemod.model.ScsePickupJob;
+import cn.com.axtg.scsemod.model.ScsePickupJobGps;
 import cn.com.axtg.scsemod.model.ScseStatus;
 import cn.com.axtg.scsemod.model.ScseStatusExample;
 import cn.com.axtg.scsemod.model.ScseUserPickupJob;
@@ -44,6 +45,8 @@ public class ScsPickupJobServlet extends HttpServlet {
 	public static final int PICKUP_JOB_OPERATION_RELEASE = 2;
 
 	public static final int PICKUP_JOB_OPERATION_DONE = 3;
+
+	public static final int PICKUP_JOB_OPERATION_GPS = 4;
 	
 	private static final String CONNOTE_PLACE_HOLDER = "-";
 
@@ -57,7 +60,6 @@ public class ScsPickupJobServlet extends HttpServlet {
 	    String connoteNumber = request.getParameter("connotenumber");
 	    String parentCarrier = request.getParameter("parentcarrier");
 	    String parentDepot = request.getParameter("parentdepot");
-
 	    
 	    
 	    Long userPkId = Long.parseLong(userId);
@@ -70,6 +72,20 @@ public class ScsPickupJobServlet extends HttpServlet {
 	    	break;
 	    case PICKUP_JOB_OPERATION_RELEASE:
 	    	releaseJob(pickupJobPkId, userPkId);
+	    	break;
+	    case PICKUP_JOB_OPERATION_GPS:
+	    	try{
+		    	String lat = request.getParameter("lat");
+		    	String lng = request.getParameter("lng");
+		    	ScsePickupJobGps gps = new ScsePickupJobGps();
+		    	gps.setParentPickupJob(Long.parseLong(pickupJobId));
+		    	gps.setLatitude(Float.parseFloat(lat));
+		    	gps.setLongitude(Float.parseFloat(lng));
+		    	
+		    	ScseInitServlet.getPickupJobGpsDao().insert(gps);
+	    	} catch(Exception exce) {
+	    		exce.printStackTrace();
+	    	}
 	    	break;
 	    case PICKUP_JOB_OPERATION_DONE:
 	    	String pickupName = URLDecoder.decode(request.getParameter("pickupname"), "UTF-8");

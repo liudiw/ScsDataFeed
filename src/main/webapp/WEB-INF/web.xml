@@ -23,13 +23,22 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     
-  <servlet>
+  	<servlet>
         <servlet-name>ScsUpdateStatusServlet</servlet-name>
         <servlet-class>cn.com.axtg.scs.feed.ScsUpdateStatusServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ScsUpdateStatusServlet</servlet-name>
         <url-pattern>/ScsUpdateStatusServlet</url-pattern>
+    </servlet-mapping>
+    
+  	<servlet>
+        <servlet-name>ScsCodInfoServlet</servlet-name>
+        <servlet-class>cn.com.axtg.scs.feed.ScsCodInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ScsCodInfoServlet</servlet-name>
+        <url-pattern>/ScsCodInfoServlet</url-pattern>
     </servlet-mapping>
     
   	<servlet>

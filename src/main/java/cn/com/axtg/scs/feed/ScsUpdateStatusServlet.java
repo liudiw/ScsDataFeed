@@ -39,6 +39,8 @@ public class ScsUpdateStatusServlet extends HttpServlet{
         String statusId = request.getParameter("statusid");
         String depotId = request.getParameter("depotid");
         String userId = request.getParameter("userid");
+        String cod = request.getParameter("cod");
+        		
         
         ScseConsignmentExample exa = new ScseConsignmentExample();
         exa.createCriteria().andConnoteNumberEqualTo(connoteNumber);
@@ -51,6 +53,10 @@ public class ScsUpdateStatusServlet extends HttpServlet{
 	        	ScseConsignment connote = connotes.get(0);
 	        	connote.setExifCurrentDepot(new Long(depotId));
 	        	connote.setExifCurrentStatus(new Long(statusId));
+	        	connote.setCodCollected(("1".equals(cod)?true:false));
+	        	if(connote.isCodCollected()) {
+	        		connote.setCodCollectedBy(Long.parseLong(userId));
+	        	}
 	        	
 	        	ScseConsignmentStatusExample sExa = new ScseConsignmentStatusExample();
 	        	sExa.createCriteria().andParentConsignmentEqualTo(connote.getPkId()).andIsCurrentEqualTo(true);
